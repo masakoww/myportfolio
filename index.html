@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nadaffa Sakho - Product Designer & Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#7B2CBF',
+                            dark: '#0a0a0a', 
+                            card: '#121212', 
+                            text: '#E0E0E0',
+                            muted: '#9CA3AF'
+                        }
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px rgba(123, 44, 191, 0.3)',
+                        'glow-hover': '0 0 30px rgba(123, 44, 191, 0.6)',
+                        'nav': '0 10px 30px -10px rgba(0,0,0,0.5)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            cursor: default;
+        }
+
+        #spotlight {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(600px circle at var(--x) var(--y), rgba(123, 44, 191, 0.07), transparent 40%);
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .hero-blob {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            animation: blob-bounce 10s infinite ease-in-out alternate;
+        }
+
+        @keyframes blob-bounce {
+            0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        .float { animation: float 6s ease-in-out infinite; }
+        .float-delay-1 { animation: float 7s ease-in-out infinite 1s; }
+        .float-delay-2 { animation: float 5s ease-in-out infinite 2s; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #ffffff, #9d4edd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* SCROLL ANIMATION CLASSES */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Marquee mask */
+        .marquee-mask {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        /* Scrollbar Hide */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .arsenal-card {
+             @apply bg-brand-card px-6 py-4 rounded-2xl border border-white/5 flex items-center gap-3 min-w-[160px] hover:border-brand-purple/50 transition duration-300 shadow-lg;
+        }
+
+        /* Video Hover Transition */
+        .video-container video {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden relative selection:bg-brand-purple selection:text-white">
+    <div id="spotlight"></div>
+    <nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] md:w-auto z-50 glass-panel rounded-full px-6 py-3 transition-all duration-300">
+        <div class="flex items-center justify-between md:gap-12">
+            <a href="#" class="text-xl font-bold tracking-wide text-white">Sakho<span class="text-brand-purple">'s</span></a>
+            
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                <a href="#home" class="hover:text-white transition hover:text-brand-purple">Home</a>
+                <a href="#services" class="hover:text-white transition hover:text-brand-purple">Services</a>
+                <!-- <a href="#arsenal" class="hover:text-white transition hover:text-brand-purple">Arsenal</a> -->
+                <a href="#portfolio" class="hover:text-white transition hover:text-brand-purple">Works</a>
+            </div>
+
+            <a href="#contact" class="hidden md:block bg-brand-purple hover:bg-purple-700 text-white px-5 py-2 rounded-full text-sm font-medium transition shadow-glow hover:shadow-glow-hover transform hover:-translate-y-0.5">
+                Let's Talk
+            </a>
+
+            <button class="md:hidden text-lg text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full mt-4 glass-panel rounded-2xl p-6 flex-col space-y-4 text-center md:hidden">
+            <a href="#home" class="text-gray-300 hover:text-white">Home</a>
+            <a href="#services" class="text-gray-300 hover:text-white">Services</a>
+            <!-- <a href="#arsenal" class="text-gray-300 hover:text-white">Arsenal</a> -->
+            <a href="#portfolio" class="text-gray-300 hover:text-white">Works</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="pt-40 pb-32 relative overflow-hidden min-h-screen flex flex-col justify-center">
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-purple/10 rounded-full blur-[120px] -z-10 pointer-events-none animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            
+            <!-- Left Content -->
+            <div class="space-y-8 reveal">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-brand-purple text-xs font-semibold tracking-wide uppercase">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Fullstack Developer & Designer
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
+                    Hi, I am <br>
+                    <span class="text-white">Nadaffa Sakho</span>
+                </h1>
+                
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-500">
+                    Designing <span class="gradient-text">The Future.</span>
+                </h2>
+
+                <p class="text-brand-muted text-lg max-w-lg leading-relaxed">
+                    I don't just design pretty interfaces; I build scalable fullstack systems. Bridging the gap between creative vision and engineering reality.
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#portfolio" class="bg-brand-purple hover:bg-purple-700 text-white px-8 py-4 rounded-full font-semibold shadow-glow hover:shadow-glow-hover transition transform hover:-translate-y-1">
+                        View Work
+                    </a>
+                    <a href="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/files/Portfolio%20of%20Nadaffa%20Sakho.pdf" class="bg-transparent border border-white/20 hover:bg-white/5 text-white px-8 py-4 rounded-full font-semibold transition flex items-center gap-2 group">
+                        Download CV <i class="fas fa-arrow-down text-sm group-hover:translate-y-1 transition"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Content (Image) -->
+            <div class="relative flex justify-center md:justify-end reveal">
+                <div class="relative w-[320px] h-[420px] md:w-[400px] md:h-[500px]">
+                    <img src="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/myphoto.webp" 
+                         alt="Nadaffa Sakho" 
+                         class="hero-blob w-full h-full object-cover bg-gray-800 shadow-2xl relative z-10 filter brightness-90 contrast-110 grayscale-[30%] hover:grayscale-0 transition duration-700">
+                    
+                    <!-- Floating Icons -->
+                    <div class="absolute -top-6 -left-6 w-16 h-16 bg-[#1e1e1e]/80 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-xl z-20 float border border-white/10">
+                        <i class="devicon-figma-plain text-3xl text-purple-400"></i>
+                    </div>
+                    <div class="absolute bottom-10 -left-4 w-12 h-12 bg-[#1e1e1e]/80 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-xl z-20 float-delay-2 border border-white/10">
+                        <i class="devicon-react-original text-3xl text-blue-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IOS GLASS LOGO STRIP (UPDATED: REAL TECH STACK) -->
+        <div class="container mx-auto px-6 mt-16 relative z-10 reveal">
+             <p class="text-center text-[10px] text-gray-500 uppercase tracking-widest mb-4">Building Enterprise Systems With</p>
+             <div class="glass-panel rounded-3xl p-8 flex flex-wrap justify-between items-center gap-8 md:gap-12 opacity-90">
+                <!-- Using Devicon Fonts for Professional Tech Stack -->
+                <div class="flex items-center gap-3 opacity-60 hover:opacity-100 transition duration-300">
+                    <i class="devicon-nextjs-plain text-3xl text-white"></i> <span class="font-bold text-lg hidden md:block">Next.js</span>
+                </div>
+                <div class="flex items-center gap-3 opacity-60 hover:opacity-100 transition duration-300">
+                    <i class="devicon-typescript-plain text-3xl text-blue-400"></i> <span class="font-bold text-lg hidden md:block">TypeScript</span>
+                </div>
+                <div class="flex items-center gap-3 opacity-60 hover:opacity-100 transition duration-300">
+                    <i class="devicon-amazonwebservices-plain-wordmark text-3xl text-orange-400"></i> <span class="font-bold text-lg hidden md:block">AWS</span>
+                </div>
+                <div class="flex items-center gap-3 opacity-60 hover:opacity-100 transition duration-300">
+                    <i class="devicon-supabase-plain text-3xl text-emerald-400"></i> <span class="font-bold text-lg hidden md:block">Supabase</span>
+                </div>
+                <div class="flex items-center gap-3 opacity-60 hover:opacity-100 transition duration-300">
+                    <i class="devicon-tailwindcss-original text-3xl text-cyan-400"></i> <span class="font-bold text-lg hidden md:block">Tailwind</span>
+                </div>
+             </div>
+        </div>
+
+        <!-- Bottom Wave -->
+        <div class="absolute bottom-0 w-full h-24 overflow-hidden z-20 pointer-events-none">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full h-full text-[#0a0a0a] fill-current opacity-90 filter blur-[2px]">
+                <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="py-32 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">My <span class="text-brand-purple">Expertise</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Bridging the gap between aesthetic beauty and technical engineering.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="group bg-brand-card p-8 rounded-3xl border border-white/5 hover:border-brand-purple/50 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden reveal">
+                    <div class="absolute inset-0 bg-gradient-to-b from-brand-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="w-14 h-14 bg-brand-purple/10 rounded-2xl flex items-center justify-center text-brand-purple text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 relative z-10">UI/UX Design</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed relative z-10">
+                        Designing complex interfaces that feel simple. Focus on retention, accessibility, and delight.
+                    </p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="group bg-brand-card p-8 rounded-3xl border border-white/5 hover:border-brand-purple/50 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden reveal" style="transition-delay: 100ms;">
+                    <div class="absolute inset-0 bg-gradient-to-b from-brand-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="w-14 h-14 bg-brand-purple/10 rounded-2xl flex items-center justify-center text-brand-purple text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fas fa-pencil-ruler"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 relative z-10">Photos & Videography</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed relative z-10">
+                        Visual storytelling backed by structure. From concept to final render, I design content with clear narrative flow, platform optimization, and audience engagement in mind
+                    </p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="group bg-brand-card p-8 rounded-3xl border border-white/5 hover:border-brand-purple/50 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden reveal" style="transition-delay: 200ms;">
+                    <div class="absolute inset-0 bg-gradient-to-b from-brand-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="w-14 h-14 bg-brand-purple/10 rounded-2xl flex items-center justify-center text-brand-purple text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 relative z-10">Fullstack Dev</h3>
+                    <p class="text-brand-muted text-sm leading-relaxed relative z-10">
+                        Scalable systems using React, Node.js, and Cloud Infrastructure. Built for performance.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ARSENAL SECTION -->
+    <section id="arsenal" class="py-20 bg-[#080808] border-y border-white/5 relative reveal">
+        <!-- Top Wave -->
+        <div class="absolute -top-10 left-0 w-full h-10 overflow-hidden transform rotate-180 opacity-50 blur-[1px]">
+             <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full h-full text-[#080808] fill-current"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path></svg>
+        </div>
+
+        <div class="container mx-auto px-6 mb-12 text-center">
+            <h3 class="text-sm font-bold text-gray-500 tracking-[0.3em] uppercase">My Expertise</h3>
+        </div>
+        
+        <div class="relative w-full overflow-hidden marquee-mask">
+            <!-- Row 1: Design -->
+            <div id="tech-row-1" class="flex gap-6 mb-6 w-max transition-transform duration-100 ease-out will-change-transform">
+                <div class="flex gap-6 items-center">
+                    <div class="arsenal-card"><i class="devicon-figma-plain text-purple-400 text-3xl"></i> <span class="font-semibold">Figma</span></div>
+                    <div class="arsenal-card"><i class="devicon-canva-original text-cyan-400 text-3xl"></i> <span class="font-semibold">Canva</span></div>
+                    <div class="arsenal-card"><i class="devicon-premierepro-plain text-purple-600 text-3xl"></i> <span class="font-semibold">Premiere</span></div>
+                    <div class="arsenal-card"><i class="fas fa-video text-white text-3xl"></i> <span class="font-semibold">CapCut</span></div>
+                    <div class="arsenal-card"><i class="fas fa-pen-nib text-green-500 text-3xl"></i> <span class="font-semibold">CorelDraw</span></div>
+                </div>
+                 <!-- Duplicate -->
+                 <div class="flex gap-6 items-center">
+                    <div class="arsenal-card"><i class="devicon-figma-plain text-purple-400 text-3xl"></i> <span class="font-semibold">Figma</span></div>
+                    <div class="arsenal-card"><i class="devicon-canva-original text-cyan-400 text-3xl"></i> <span class="font-semibold">Canva</span></div>
+                    <div class="arsenal-card"><i class="devicon-premierepro-plain text-purple-600 text-3xl"></i> <span class="font-semibold">Premiere</span></div>
+                    <div class="arsenal-card"><i class="fas fa-video text-white text-3xl"></i> <span class="font-semibold">CapCut</span></div>
+                    <div class="arsenal-card"><i class="fas fa-pen-nib text-green-500 text-3xl"></i> <span class="font-semibold">CorelDraw</span></div>
+                </div>
+                 <!-- Triplicate -->
+                 <div class="flex gap-6 items-center">
+                    <div class="arsenal-card"><i class="devicon-figma-plain text-purple-400 text-3xl"></i> <span class="font-semibold">Figma</span></div>
+                    <div class="arsenal-card"><i class="devicon-canva-original text-cyan-400 text-3xl"></i> <span class="font-semibold">Canva</span></div>
+                    <div class="arsenal-card"><i class="devicon-premierepro-plain text-purple-600 text-3xl"></i> <span class="font-semibold">Premiere</span></div>
+                    <div class="arsenal-card"><i class="fas fa-video text-white text-3xl"></i> <span class="font-semibold">CapCut</span></div>
+                    <div class="arsenal-card"><i class="fas fa-pen-nib text-green-500 text-3xl"></i> <span class="font-semibold">CorelDraw</span></div>
+                </div>
+            </div>
+
+            <!-- Row 2: Code -->
+            <div id="tech-row-2" class="flex gap-6 w-max transition-transform duration-100 ease-out will-change-transform">
+                 <div class="flex gap-6 items-center">
+                    <div class="arsenal-card"><i class="devicon-html5-plain text-orange-500 text-3xl"></i> <span class="font-semibold">HTML5</span></div>
+                    <div class="arsenal-card"><i class="devicon-tailwindcss-original text-cyan-400 text-3xl"></i> <span class="font-semibold">Tailwind</span></div>
+                    <div class="arsenal-card"><i class="devicon-javascript-plain text-yellow-400 text-3xl"></i> <span class="font-semibold">JS</span></div>
+                    <div class="arsenal-card"><i class="devicon-nextjs-plain text-white text-3xl"></i> <span class="font-semibold">Next.js</span></div>
+                    <div class="arsenal-card"><i class="devicon-react-original text-blue-400 text-3xl"></i> <span class="font-semibold">React</span></div>
+                    <div class="arsenal-card"><i class="devicon-git-plain text-red-500 text-3xl"></i> <span class="font-semibold">Git</span></div>
+                    <div class="arsenal-card"><i class="devicon-bootstrap-plain text-purple-500 text-3xl"></i> <span class="font-semibold">Bootstrap</span></div>
+                    <div class="arsenal-card"><i class="devicon-mongodb-plain text-green-500 text-3xl"></i> <span class="font-semibold">MongoDB</span></div>
+                    <div class="arsenal-card"><i class="devicon-firebase-plain text-yellow-500 text-3xl"></i> <span class="font-semibold">Firebase</span></div>
+                    <div class="arsenal-card"><i class="devicon-r-plain text-blue-600 text-3xl"></i> <span class="font-semibold">R</span></div>
+                </div>
+                <!-- Duplicate -->
+                <div class="flex gap-6 items-center">
+                    <div class="arsenal-card"><i class="devicon-html5-plain text-orange-500 text-3xl"></i> <span class="font-semibold">HTML5</span></div>
+                    <div class="arsenal-card"><i class="devicon-tailwindcss-original text-cyan-400 text-3xl"></i> <span class="font-semibold">Tailwind</span></div>
+                    <div class="arsenal-card"><i class="devicon-javascript-plain text-yellow-400 text-3xl"></i> <span class="font-semibold">JS</span></div>
+                    <div class="arsenal-card"><i class="devicon-nextjs-plain text-white text-3xl"></i> <span class="font-semibold">Next.js</span></div>
+                    <div class="arsenal-card"><i class="devicon-react-original text-blue-400 text-3xl"></i> <span class="font-semibold">React</span></div>
+                    <div class="arsenal-card"><i class="devicon-git-plain text-red-500 text-3xl"></i> <span class="font-semibold">Git</span></div>
+                    <div class="arsenal-card"><i class="devicon-bootstrap-plain text-purple-500 text-3xl"></i> <span class="font-semibold">Bootstrap</span></div>
+                    <div class="arsenal-card"><i class="devicon-mongodb-plain text-green-500 text-3xl"></i> <span class="font-semibold">MongoDB</span></div>
+                    <div class="arsenal-card"><i class="devicon-firebase-plain text-yellow-500 text-3xl"></i> <span class="font-semibold">Firebase</span></div>
+                    <div class="arsenal-card"><i class="devicon-r-plain text-blue-600 text-3xl"></i> <span class="font-semibold">R</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION (SUPABASE ASSETS) -->
+    <section id="portfolio" class="py-24 bg-[#0a0a0c] relative">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4 reveal">
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-2">Selected <span class="text-gray-600">Works</span></h2>
+                    <p class="text-gray-400">Design, development, and content.</p>
+                </div>
+
+                <!-- FILTER BUTTONS -->
+                <div class="flex overflow-x-auto no-scrollbar gap-2 pb-2 md:pb-0">
+                    <button class="filter-btn active bg-brand-purple text-white px-5 py-2 rounded-full text-sm font-medium transition hover:bg-brand-purple/80 whitespace-nowrap" data-filter="all">All</button>
+                    <button class="filter-btn bg-white/5 text-gray-400 border border-white/10 px-5 py-2 rounded-full text-sm font-medium transition hover:bg-white/10 hover:text-white whitespace-nowrap" data-filter="dev">Development</button>
+                    <button class="filter-btn bg-white/5 text-gray-400 border border-white/10 px-5 py-2 rounded-full text-sm font-medium transition hover:bg-white/10 hover:text-white whitespace-nowrap" data-filter="uiux">UI/UX</button>
+                    <button class="filter-btn bg-white/5 text-gray-400 border border-white/10 px-5 py-2 rounded-full text-sm font-medium transition hover:bg-white/10 hover:text-white whitespace-nowrap" data-filter="social">Social & Video</button>
+                </div>
+            </div>
+
+            <!-- Works Grid -->
+            <div class="columns-1 md:columns-2 gap-8 space-y-8">
+
+                <!-- Website (Development) -->
+                <a class="portfolio-item group break-inside-avoid relative rounded-[30px] overflow-hidden border border-white/5 reveal block"
+                   data-category="dev"
+                   href="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/webs/website.webp"
+                   target="_blank" rel="noopener">
+                    <img src="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/webs/website.webp"
+                         loading="lazy"
+                         alt="Website design / development"
+                         class="w-full h-auto object-cover transition duration-700 group-hover:scale-110 filter brightness-90 group-hover:brightness-100">
+                    <div class="absolute top-4 left-4 flex gap-2">
+                         <span class="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold border border-white/10 flex items-center gap-1">
+                            <i class="fas fa-code"></i> Web
+                         </span>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition duration-500">Website Project</h3>
+                        <p class="text-brand-purple text-sm translate-y-4 group-hover:translate-y-0 transition duration-500 delay-100">Development / UI</p>
+                    </div>
+                </a>
+
+                <!-- Instagram Feed (Social) -->
+                <a class="portfolio-item group break-inside-avoid relative rounded-[30px] overflow-hidden border border-white/5 reveal block"
+                   data-category="social"
+                   href="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/feeds/igfeed.webp"
+                   target="_blank" rel="noopener">
+                    <img src="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/feeds/igfeed.webp"
+                         loading="lazy"
+                         alt="Instagram feed design"
+                         class="w-full h-auto object-cover transition duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition duration-500">Instagram Feed</h3>
+                        <p class="text-brand-purple text-sm translate-y-4 group-hover:translate-y-0 transition duration-500 delay-100">Social Content</p>
+                    </div>
+                </a>
+
+                <!-- Poster 1 (Social) -->
+                <a class="portfolio-item group break-inside-avoid relative rounded-[30px] overflow-hidden border border-white/5 reveal block"
+                   data-category="social"
+                   href="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/posters/poster.webp"
+                   target="_blank" rel="noopener">
+                    <img src="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/posters/poster.webp"
+                         loading="lazy"
+                         alt="Poster design"
+                         class="w-full h-auto object-cover transition duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition duration-500">Poster</h3>
+                        <p class="text-brand-purple text-sm translate-y-4 group-hover:translate-y-0 transition duration-500 delay-100">Visual Design</p>
+                    </div>
+                </a>
+
+                <!-- Poster 2 / Banner (Social) -->
+                <a class="portfolio-item group break-inside-avoid relative rounded-[30px] overflow-hidden border border-white/5 reveal block"
+                   data-category="social"
+                   href="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/posters/banner2.webp"
+                   target="_blank" rel="noopener">
+                    <img src="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/posters/banner2.webp"
+                         loading="lazy"
+                         alt="Banner design"
+                         class="w-full h-auto object-cover transition duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition duration-500">Banner</h3>
+                        <p class="text-brand-purple text-sm translate-y-4 group-hover:translate-y-0 transition duration-500 delay-100">Campaign Asset</p>
+                    </div>
+                </a>
+
+                <!-- Logo (UI/UX) -->
+                <a class="portfolio-item group break-inside-avoid relative rounded-[30px] overflow-hidden border border-white/5 reveal block"
+                   data-category="uiux"
+                   href="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/logos/Mo2MA%20logo.png"
+                   target="_blank" rel="noopener">
+                    <div class="bg-black/40 w-full p-10 flex items-center justify-center">
+                        <img src="https://zrpqfsxhhrepaxjcbful.supabase.co/storage/v1/object/public/portofolio/images/full/logos/Mo2MA%20logo.png"
+                             loading="lazy"
+                             alt="Mo2MA Logo"
+                             class="max-h-[260px] w-auto object-contain opacity-95 group-hover:opacity-100 transition">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                        <h3 class="text-2xl font-bold text-white translate-y-4 group-hover:translate-y-0 transition duration-500">Mo2MA Logo</h3>
+                        <p class="text-brand-purple text-sm translate-y-4 group-hover:translate-y-0 transition duration-500 delay-100">Brand Identity</p>
+                    </div>
+                </a>
+
+                <!-- Instagram Reel (Social/Video) -->
+                <a class="portfolio-item group break-inside-avoid relative rounded-[30px] overflow-hidden border border-white/5 reveal block"
+                   data-category="social"
+                   href="https://www.instagram.com/reel/DN51Pu5iYcF/?igsh=MWF1NHJwZzA0MGgyaQ=="
+                   target="_blank" rel="noopener">
+                    <div class="relative w-full aspect-[9/16] bg-black flex items-center justify-center">
+                        <div class="absolute inset-0 bg-gradient-to-br from-brand-purple/20 via-transparent to-black/70"></div>
+                        <div class="relative z-10 text-center px-10">
+                            <div class="inline-flex items-center gap-2 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full text-sm font-bold border border-white/10">
+                                <i class="fab fa-instagram"></i> Watch Reel
+                            </div>
+                            <p class="mt-4 text-gray-300 text-sm">Opens Instagram</p>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
+                        <h3 class="text-xl font-bold">Instagram Reel</h3>
+                        <p class="text-gray-400 text-xs">Video Editing</p>
+                    </div>
+                </a>
+
+                <!-- Slides (placeholder) -->
+                <div class="portfolio-item group break-inside-avoid relative rounded-[30px] overflow-hidden border border-white/5 reveal"
+                     data-category="uiux">
+                    <div class="bg-brand-card p-10">
+                        <h3 class="text-2xl font-bold mb-2">Slides</h3>
+                        <p class="text-brand-muted text-sm">Add your slide preview images or a PDF link when ready.</p>
+                        <p class="text-gray-500 text-xs mt-4">Tip: export slides to JPG/WebP and upload to Supabase, then replace this block.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- TESTIMONIALS -->
+    <!-- <section class="py-32 relative overflow-hidden reveal">     
+        <div class="absolute top-0 w-full h-24 overflow-hidden z-20 pointer-events-none opacity-50 blur-[2px]">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full h-full text-[#0a0a0c] fill-current"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path></svg>
+        </div>
+
+        <div class="absolute left-0 top-1/2 w-64 h-64 bg-brand-purple/10 blur-[100px] -translate-y-1/2"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <i class="fas fa-quote-left text-4xl text-brand-purple/50 mb-6"></i>
+            <h3 class="text-2xl md:text-4xl font-semibold leading-relaxed max-w-4xl mx-auto mb-8">
+                "Nadaffa delivered a clean, practical design system and improved the overall user experience."
+            </h3>
+            <div class="flex items-center justify-center gap-4">
+                <img src="https://i.pravatar.cc/100?img=33" alt="Client" class="w-12 h-12 rounded-full border-2 border-brand-purple">
+                <div class="text-left">
+                    <p class="font-bold text-white">James Carter</p>
+                    <p class="text-sm text-gray-500">CEO, FinTech Global</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- FOOTER -->
+    <section id="contact" class="py-32 relative bg-[#0a0a0a] reveal">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-purple/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-5xl md:text-8xl font-bold tracking-tight mb-8">
+                Have an idea? <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-purple to-purple-400">Let's build it.</span>
+            </h2>
+            <p class="text-gray-400 text-lg mb-12 max-w-xl mx-auto">
+                Ready to create something iconic?
+            </p>
+            
+            <a href="mailto:nadaffasakho@gmail.com" class="glass-panel inline-flex items-center gap-3 bg-white text-black hover:bg-gray-200 px-10 py-5 rounded-full text-xl font-bold transition transform hover:scale-105 shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+                Start a Project <i class="fas fa-paper-plane"></i>
+            </a>
+
+            <div class="mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>&copy; 2026 Nadaffa Sakho. All Rights Reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="https://www.linkedin.com/in/nadaffa-amalillah-741773233/" class="hover:text-white transition">LinkedIn</a>
+                    <a href="https://github.com/masakoww" class="hover:text-white transition">GitHub</a>
+                    <a href="https://instagram.com/ndfskh" class="hover:text-white transition">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+        const spotlight = document.getElementById('spotlight');
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            spotlight.style.setProperty('--x', x + 'px');
+            spotlight.style.setProperty('--y', y + 'px');
+        });
+
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        const arsenalSection = document.getElementById('arsenal');
+        const row1 = document.getElementById('tech-row-1');
+        const row2 = document.getElementById('tech-row-2');
+        window.addEventListener('scroll', () => {
+            if(!arsenalSection) return;
+            const sectionTop = arsenalSection.offsetTop;
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            if (scrollY + windowHeight > sectionTop && scrollY < sectionTop + arsenalSection.offsetHeight + windowHeight) {
+                const relativeScroll = scrollY - sectionTop;
+                row1.style.transform = `translateX(${relativeScroll * -0.15}px)`;
+                row2.style.transform = `translateX(${-500 + (relativeScroll * 0.15)}px)`; 
+            }
+        });
+
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-brand-purple', 'text-white');
+                    b.classList.add('bg-white/5', 'text-gray-400');
+                });
+                btn.classList.remove('bg-white/5', 'text-gray-400');
+                btn.classList.add('bg-brand-purple', 'text-white');
+                
+                const filterValue = btn.getAttribute('data-filter');
+                portfolioItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.classList.remove('hidden');
+                        setTimeout(() => item.style.opacity = '1', 50);
+                    } else {
+                        item.style.opacity = '0';
+                        setTimeout(() => item.classList.add('hidden'), 300);
+                    }
+                });
+            });
+        });
+
+        const videoContainers = document.querySelectorAll('.video-container, .portfolio-item[data-category="social"], .portfolio-item[data-category="video"]');
+        
+        videoContainers.forEach(container => {
+            const video = container.querySelector('video');
+            if(video) {
+                container.addEventListener('mouseenter', () => {
+                    video.play();
+                });
+                
+                container.addEventListener('mouseleave', () => {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
